@@ -1,9 +1,9 @@
-package com.tafh.animemovieapp.data.remote.response.attribute.schedule
+package com.tafh.animemovieapp.data.model.schedule
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Genre(
+data class Producer(
     @SerializedName("mal_id")
     val malId: Int,
     val name: String,

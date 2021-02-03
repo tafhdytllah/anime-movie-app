@@ -5,13 +5,15 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
-    android:layout_marginEnd="4dp">
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="8dp">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvItemGrenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/primary_dark"
+        app:cardBackgroundColor="@color/anime_blue_700"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,18 +21,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:id="@+id/tvItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
             android:text="Action"
-            android:textColor="@color/white"
+            android:textColor="@color/anime_white"
             android:textSize="12sp" />
 
 

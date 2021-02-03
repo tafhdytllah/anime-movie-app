@@ -4,90 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:fitsSystemWindows="true"
-    tools:context=".view.fragment.BerandaFragment">
+    tools:ignore="MergeRootFrame"
+    tools:context=".view.fragment.DetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/appbar"
-        android:theme="@style/Theme.AnimeMovieApp.AppBarOverlay"
-        android:fitsSystemWindows="true">
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@color/anime_blue_900"
+        android:stateListAnimator="@animator/show_toolbar"
+        android:animateLayoutChanges="true"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:fitsSystemWindows="true"
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            app:collapsedTitleGravity="start"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AnimeMovieApp.Toolbar.Text"
+            app:contentScrim="@color/anime_blue_700"
             app:statusBarScrim="@color/anime_blue_900"
-            app:layout_scrollFlags="scroll|snap"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="16dp"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="Detail Anime"
             app:toolbarId="@id/toolbar">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:fitsSystemWindows="true"
+                android:id="@+id/ivImageDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/image_of_anime"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_onepiece"
+                app:layout_collapseMode="parallax" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                android:background="@color/anime_blue_700"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:contentInsetStart="0dp"
-                app:layout_collapseMode="parallax">
+                app:contentInsetStartWithNavigation="0dp"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:titleTextColor="?attr/colorOnSurface"
+                app:navigationIcon="@drawable/ic_detail_back"
+                />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:gravity="start"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Anime"
-                    android:textAppearance="?attr/textAppearanceHeadline5" />
-
-            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:background="?attr/colorPrimary"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:paddingBottom="500dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <!--        <androidx.appcompat.widget.Toolbar-->
-            <!--                android:id="@+id/toolbar"-->
-            <!--                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="?attr/actionBarSize"-->
-            <!--                android:background="@color/primary"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                <TextView-->
-            <!--                    android:id="@+id/tvTitleToolbar"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginStart="8dp"-->
-            <!--                    android:layout_marginTop="8dp"-->
-            <!--                    android:layout_marginBottom="8dp"-->
-            <!--                    android:textColor="@color/white"-->
-            <!--                    android:textSize="28sp"-->
-            <!--                    android:textStyle="bold"-->
-            <!--                    android:text="Anime"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-
-            <!--            </androidx.appcompat.widget.Toolbar>-->
 
             <!-- Top -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/anime_blue_700"
+                android:background="?attr/colorPrimaryVariant"
                 android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="0dp"
@@ -130,19 +116,6 @@
                     app:layout_constraintTop_toTopOf="@+id/tvTopTitle"
                     app:layout_constraintVertical_bias="1.0" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvTopList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTopTitle"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_top_list" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -152,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/anime_blue_700"
+                android:background="?attr/colorPrimaryVariant"
                 android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
@@ -184,17 +157,6 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/tvGenreTitle" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvGenreList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvGenreTitle"
-                    tools:listitem="@layout/item_genre_list" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -204,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/anime_blue_700"
+                android:background="?attr/colorPrimaryVariant"
                 android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="0dp"
@@ -266,21 +228,6 @@
                         app:layout_constraintStart_toStartOf="@+id/ivMingguCalender"
                         app:layout_constraintTop_toBottomOf="@id/ivMingguCalender" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvMingguList"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/ivMingguCalender"
-                        app:layout_constraintTop_toTopOf="@+id/ivMingguCalender"
-                        app:spanCount="3"
-                        tools:itemCount="5"
-                        tools:listitem="@layout/item_sunday_list" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -338,10 +285,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/anime_blue_700"
+                android:background="?attr/colorPrimaryVariant"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
                 android:paddingTop="16dp"
+                android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -367,9 +314,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

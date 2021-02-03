@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_anime"
-    app:startDestination="@id/berandaFragment">
+    app:startDestination="@id/beranda">
 
     <fragment
-        android:id="@+id/berandaFragment"
+        android:id="@+id/beranda"
         android:name="com.tafh.animemovieapp.view.fragment.BerandaFragment"
-        android:label="fragment_beranda"
-        tools:layout="@layout/fragment_beranda" />
+        android:label="Beranda"
+        tools:layout="@layout/fragment_beranda">
+        <action
+            android:id="@+id/action_berandaFragment_to_detailFragment"
+            app:destination="@id/detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail"
+        android:name="com.tafh.animemovieapp.view.fragment.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>
