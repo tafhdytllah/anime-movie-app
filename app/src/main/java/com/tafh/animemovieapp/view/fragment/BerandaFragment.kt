@@ -20,7 +20,7 @@ import com.tafh.animemovieapp.viewmodels.BerandaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BerandaFragment : Fragment() {
+class BerandaFragment : Fragment(), TopListAdapter.onItemClickListener {
 
     private var _binding: FragmentBerandaBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +29,7 @@ class BerandaFragment : Fragment() {
 
     private var genreList = arrayListOf<GenreAnime>()
 
-    private val topAdapter = TopListAdapter()
+    private val topAdapter = TopListAdapter(this)
     private val genreAdapter = GenreListAdapter()
     private val sundayAdapter = SundayAdapter()
 
@@ -53,7 +53,7 @@ class BerandaFragment : Fragment() {
 //            mAdapter.submitData(viewLifecycleOwner.lifecycle, it)
             if (it.isSuccessful) {
                 val response = it.body()?.top
-                topAdapter.setData(response)
+                topAdapter.submitList(response)
             } else {
                 Log.d("LOG", "${it.errorBody()}")
             }
@@ -73,16 +73,18 @@ class BerandaFragment : Fragment() {
         })
 
         // onItemClickCallBack
-        topAdapter.setOnItemClickCallBack(object : TopListAdapter.OnItemClickCallBack{
-            override fun onItemClick(top: Top) {
-//                val top = Top(
-//                        top.malId
-//                )
-                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment()
-                findNavController().navigate(action)
-            }
+//        topAdapter.setOnItemClickCallBack(object : TopListAdapter.OnItemClickCallBack{
+//            override fun onItemClick(top: Top) {
+////                val top = Top(
+////                        top.malId
+////                )
+//                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+//                findNavController().navigate(action)
+//            }
+//
+//        })
 
-        })
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         return binding.root
     }
@@ -165,6 +167,11 @@ class BerandaFragment : Fragment() {
         genreList.addAll(list)
 
 
+    }
+
+    override fun onItemClick(top: Top) {
+        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+        findNavController().navigate(action)
     }
 
 }

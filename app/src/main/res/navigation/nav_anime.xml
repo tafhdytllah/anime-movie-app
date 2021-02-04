@@ -18,5 +18,9 @@
         android:id="@+id/detail"
         android:name="com.tafh.animemovieapp.view.fragment.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="malId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -14,7 +14,8 @@
         <!-- Navigation bar color. -->
         <item name="android:navigationBarColor" tools:targetApi="l">@color/anime_blue_900</item>
         <!-- Customize your theme here. -->
-        <item name="android:colorBackground">@color/anime_blue_900</item>
+        <item name="android:colorBackground">@color/anime_white</item>
+        <item name="android:textColor">@color/anime_white</item>
     </style>
 
     <style name="Theme.AnimeMovieApp" parent="Base.Theme.AnimeMovieApp">

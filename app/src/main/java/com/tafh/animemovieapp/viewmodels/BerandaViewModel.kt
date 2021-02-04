@@ -4,8 +4,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tafh.animemovieapp.data.remote.response.TopResponse
-import com.tafh.animemovieapp.data.remote.response.schedule.SundayResponse
+import com.tafh.animemovieapp.data.response.TopResponse
+import com.tafh.animemovieapp.data.response.schedule.SundayResponse
 import com.tafh.animemovieapp.data.repository.AnimeRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response

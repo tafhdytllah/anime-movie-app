@@ -10,4 +10,6 @@
     <color name="anime_blue_900">#181B31</color>
     <color name="anime_white">#deffffff</color>
     <color name="anime_black">#de000000</color>
+
+    <color name="anime_blue_white">#2C7AFF</color>
 </resources>

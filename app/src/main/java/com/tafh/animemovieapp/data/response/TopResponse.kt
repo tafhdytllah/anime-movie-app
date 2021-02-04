@@ -1,4 +1,4 @@
-package com.tafh.animemovieapp.data.remote.response
+package com.tafh.animemovieapp.data.response
 
 
 import com.google.gson.annotations.SerializedName

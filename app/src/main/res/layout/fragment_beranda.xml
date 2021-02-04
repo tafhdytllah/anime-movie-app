@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@color/anime_blue_900"
     android:fitsSystemWindows="true"
     tools:context=".view.fragment.BerandaFragment">
 

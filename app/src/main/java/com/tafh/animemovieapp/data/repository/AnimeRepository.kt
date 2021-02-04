@@ -22,6 +22,7 @@ class AnimeRepository @Inject constructor(
             ).liveData
 
     suspend fun getTopList() = apiService.getTopList(1)
+    suspend fun getDetail(id: Int) = apiService.getDetail(id)
 
     suspend fun getScheduleSunday() = apiService.getScheduleSunday()
     suspend fun getScheduleMonday() = apiService.getScheduleMonday()
