@@ -2,122 +2,96 @@ package com.tafh.animemovieapp.view.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.tafh.animemovieapp.adapters.GenreListAdapter
+import com.tafh.animemovieapp.adapters.SundayAdapter
+import com.tafh.animemovieapp.adapters.TopAdapter
 import com.tafh.animemovieapp.data.model.GenreAnime
 import com.tafh.animemovieapp.data.model.top.Top
 import com.tafh.animemovieapp.databinding.FragmentBerandaBinding
-import com.tafh.animemovieapp.adapters.GenreListAdapter
-import com.tafh.animemovieapp.adapters.SundayAdapter
-import com.tafh.animemovieapp.adapters.TopListAdapter
 import com.tafh.animemovieapp.viewmodels.BerandaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BerandaFragment : Fragment(), TopListAdapter.onItemClickListener {
+class BerandaFragment : Fragment(), TopAdapter.onItemClickListener {
 
-    private var _binding: FragmentBerandaBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentBerandaBinding
 
-    private lateinit var viewModel: BerandaViewModel
-
-    private var genreList = arrayListOf<GenreAnime>()
-
-    private val topAdapter = TopListAdapter(this)
-    private val genreAdapter = GenreListAdapter()
-    private val sundayAdapter = SundayAdapter()
+    private val viewModel: BerandaViewModel by lazy {
+        ViewModelProvider(this).get(BerandaViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentBerandaBinding.inflate(inflater, container, false)
+    ): View {
+        binding = FragmentBerandaBinding.inflate(inflater)
+        context ?: return binding.root
 
-        setActionbar()
+        setupAdapter()
 
-        viewModel = ViewModelProvider(this).get(BerandaViewModel::class.java)
-
-        setGenreList()
-
-        setAdapter()
-
-
-        // Top List
-        viewModel.topList.observe(viewLifecycleOwner, Observer {
-//            mAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-            if (it.isSuccessful) {
-                val response = it.body()?.top
-                topAdapter.submitList(response)
-            } else {
-                Log.d("LOG", "${it.errorBody()}")
-            }
-        })
-
-        // Genre List
-        genreAdapter.setData(genreList)
-
-//         Minggu List
-        viewModel.scheduleSunday.observe(viewLifecycleOwner, Observer {
-            if (it.isSuccessful) {
-                val response = it.body()?.sunday
-                sundayAdapter.setData(response)
-            } else {
-                Log.d("LOG", "${it.errorBody()}")
-            }
-        })
-
-        // onItemClickCallBack
-//        topAdapter.setOnItemClickCallBack(object : TopListAdapter.OnItemClickCallBack{
-//            override fun onItemClick(top: Top) {
-////                val top = Top(
-////                        top.malId
-////                )
-//                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-//                findNavController().navigate(action)
-//            }
-//
-//        })
-
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        binding.tvTopLihatSemua.setOnClickListener{
+            findNavController().navigate(BerandaFragmentDirections.actionBerandaToTopListFragment())
+        }
 
         return binding.root
     }
 
-    private fun setActionbar() {
+    private fun setupAdapter() {
+        val topAdapter = TopAdapter(this)
+        binding.rvTop.adapter = topAdapter
+        subscribeTop(topAdapter)
 
-        val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.setDisplayShowTitleEnabled(false)
+        val genreAdapter = GenreListAdapter()
+        binding.rvGenre.adapter = genreAdapter
+        setUiGenre(genreAdapter)
+
+        val sundayAdapter = SundayAdapter()
+        binding.rvMinggu.adapter = sundayAdapter
+//        subscribeSundayList(sundayAdapter)
 
     }
 
+//    private fun subscribeSundayList(adapter: SundayAdapter) {
+//        viewModel.scheduleSunday.observe(viewLifecycleOwner) {
+//            if (it.isSuccessful) {
+//                val response = it.body()?.sunday
+//                adapter.setData(response)
+//            } else {
+//                Log.d("LOG", "${it.errorBody()}")
+//            }
+//        }
+//    }
 
-    private fun setAdapter() {
-        binding.apply {
-            // Top List RecyclerView
-            rvTopList.setHasFixedSize(true)
-            rvTopList.adapter = topAdapter
+    private fun setUiGenre(adapter: GenreListAdapter) {
+        val genreList = setDataGenre()
+        adapter.setData(genreList)
+    }
 
-            // Genre List RecyclerView
-            rvGenreList.setHasFixedSize(true)
-            rvGenreList.adapter = genreAdapter
-
-            // Minggu List RecyclerView
-            rvMingguList.setHasFixedSize(true)
-            rvMingguList.adapter = sundayAdapter
-
-
-
+    private fun subscribeTop(adapter: TopAdapter) {
+        viewModel.topList.observe(viewLifecycleOwner) {
+            if (it.isSuccessful) {
+                val list = it.body()?.top
+                adapter.submitList(list)
+            } else {
+                Log.d("LOG", "${it.errorBody()}")
+            }
         }
     }
 
-    private fun setGenreList() {
 
+    override fun onItemClick(top: Top) {
+        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+        findNavController().navigate(action)
+    }
+
+
+    private fun setDataGenre() : List<GenreAnime>{
         val list = mutableListOf<GenreAnime>()
 
         list.add(GenreAnime(1, "Action"))
@@ -164,14 +138,30 @@ class BerandaFragment : Fragment(), TopListAdapter.onItemClickListener {
 
         list.add(GenreAnime(43, "Josei"))
 
-        genreList.addAll(list)
 
+        return list
 
     }
 
-    override fun onItemClick(top: Top) {
-        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-        findNavController().navigate(action)
-    }
+
+//    private fun setActionbar() {
+//
+//        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+//        val actionBar = (activity as AppCompatActivity).supportActionBar
+//        actionBar?.setDisplayShowTitleEnabled(false)
+//    }
+
+
+    // onItemClickCallBack
+//        topAdapter.setOnItemClickCallBack(object : TopListAdapter.OnItemClickCallBack{
+//            override fun onItemClick(top: Top) {
+////                val top = Top(
+////                        top.malId
+////                )
+//                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+//                findNavController().navigate(action)
+//            }
+//
+//        })
 
 }

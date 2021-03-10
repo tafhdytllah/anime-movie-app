@@ -1,4 +1,4 @@
-package com.tafh.animemovieapp.data.response.schedule
+package com.tafh.animemovieapp.data.response
 
 import com.google.gson.annotations.SerializedName
 import com.tafh.animemovieapp.data.model.schedule.Monday

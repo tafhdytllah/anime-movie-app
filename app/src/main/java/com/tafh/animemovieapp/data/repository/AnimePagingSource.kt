@@ -2,8 +2,10 @@ package com.tafh.animemovieapp.data.repository
 
 import android.util.Log
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.tafh.animemovieapp.api.ApiService
 import com.tafh.animemovieapp.data.model.top.Top
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -16,27 +18,37 @@ class AnimePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Top> {
         return try {
 
-            val page = params.key ?: STARTING_PAGE_INDEX
-            val response = apiService.getTopList(page)
-            var topAnimeList = emptyList<Top>()
+            delay(1000)
 
-            if (response.isSuccessful) {
-                topAnimeList = response.body()!!.top
-            } else {
-                Log.e("LOG", response.message())
-            }
+            val currentLoadingPageKey = params.key ?: STARTING_PAGE_INDEX
+            val response = apiService.getTopList(currentLoadingPageKey)
+            val responseData = mutableListOf<Top>()
+            val data = response.top
+            responseData.addAll(data)
+
+
+            val prevKey = if (currentLoadingPageKey == STARTING_PAGE_INDEX) null else currentLoadingPageKey - 1
+            val nextKey = currentLoadingPageKey + 1
+            Log.d("CURRENTLOADINGPAGEKEY", "$prevKey")
+            Log.d("CURRENTLOADINGPAGEKEY", "${nextKey.minus(1)} POSISI PAGE")
+            Log.d("CURRENTLOADINGPAGEKEY", "$nextKey")
 
             LoadResult.Page(
-                    data = topAnimeList,
-                    prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
-                    nextKey = if (topAnimeList.isEmpty()) null else page + 1
+                    data = responseData,
+                    prevKey = prevKey,
+                    nextKey = nextKey
             )
 
         } catch (e: IOException) {
             LoadResult.Error(e)
+
         } catch (e: HttpException) {
             LoadResult.Error(e)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Top>): Int? {
+        return state.anchorPosition
     }
 
 

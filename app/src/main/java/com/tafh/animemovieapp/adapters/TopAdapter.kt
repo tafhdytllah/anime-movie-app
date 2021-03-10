@@ -1,10 +1,9 @@
 package com.tafh.animemovieapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
@@ -12,12 +11,11 @@ import com.tafh.animemovieapp.data.model.top.Top
 import com.tafh.animemovieapp.databinding.ItemTopListBinding
 
 
-class TopListAdapter(
+class TopAdapter(
         private val listener: onItemClickListener
-) : PagingDataAdapter<Top, TopListAdapter.TopViewHolder>(TopDiffCallback) {
+) : ListAdapter<Top, TopAdapter.TopViewHolder>(TopDiffCallback) {
 
-    val LOADING_ITEM = 0
-    val ANIME_ITEM = 1
+    val MAX_ITEM = 10
 
     companion object {
         private val TopDiffCallback = object : DiffUtil.ItemCallback<Top>() {
@@ -37,7 +35,6 @@ class TopListAdapter(
         init {
             binding.root.setOnClickListener{
                 val position = bindingAdapterPosition
-
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
@@ -75,17 +72,23 @@ class TopListAdapter(
         return TopViewHolder(ItemTopListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemViewType(position: Int): Int {
-        Log.d("ADAPTER", "$position, $itemCount")
-        return if(position == itemCount) ANIME_ITEM else LOADING_ITEM
+    override fun getItemCount(): Int {
+        val value: Int
+        val listSize = currentList.size
+
+        if (listSize > MAX_ITEM) {
+            value = MAX_ITEM
+        } else {
+            value = listSize
+        }
+
+        return value
     }
 
 
     interface onItemClickListener {
         fun onItemClick(top: Top)
     }
-
-
 
 
 }

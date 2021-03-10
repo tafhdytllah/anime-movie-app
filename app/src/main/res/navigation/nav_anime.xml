@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_berandaFragment_to_detailFragment"
             app:destination="@id/detail" />
+        <action
+            android:id="@+id/action_beranda_to_topListFragment"
+            app:destination="@id/topListFragment" />
+        <action
+            android:id="@+id/action_beranda_to_genreListFragment"
+            app:destination="@id/genreListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detail"
@@ -22,5 +28,23 @@
         <argument
             android:name="malId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/topListFragment"
+        android:name="com.tafh.animemovieapp.view.fragment.TopListFragment"
+        android:label="fragment_top_list"
+        tools:layout="@layout/fragment_top_list" >
+        <action
+            android:id="@+id/action_topListFragment_to_detail"
+            app:destination="@id/detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreListFragment"
+        android:name="com.tafh.animemovieapp.GenreListFragment"
+        android:label="fragment_genre_list"
+        tools:layout="@layout/fragment_genre_list" >
+        <action
+            android:id="@+id/action_genreListFragment_to_detail"
+            app:destination="@id/detail" />
     </fragment>
 </navigation>

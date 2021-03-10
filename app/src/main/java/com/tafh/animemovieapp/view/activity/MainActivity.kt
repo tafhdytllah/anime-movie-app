@@ -17,64 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
-    private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        if (savedInstanceState == null) {
-            setupNavigation()
-        }
+        setContentView(R.layout.activity_main)
 
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        setupNavigation()
-    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
-    }
-
-    private fun setupNavigation() {
-        //find the nav controller
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHosFragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
-
-        //setup the action bar
-//        setSupportActionBar(binding.toolbar)
-
-        //setup the action bar
-//        setupActionBarWithNavController(navController)
-
-//        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-//            val toolBar = supportActionBar ?: return@addOnDestinationChangedListener
-//            when(destination.id) {
-//                R.id.beranda -> {
-//                    toolBar.apply {
-//                        show()
-//                        setTitle("Anime")
-//                        setDisplayShowTitleEnabled(true)
-//
-//                    }
-//                }
-//                else -> {
-//                    toolBar.apply {
-//                        show()
-//                        setDisplayShowTitleEnabled(true)
-//                        setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-//                        setDisplayHomeAsUpEnabled(true)
-//                    }
-//                }
-//            }
-//
-//        }
-    }
 
 }
