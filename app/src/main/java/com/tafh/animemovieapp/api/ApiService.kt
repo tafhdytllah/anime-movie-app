@@ -3,6 +3,7 @@ package com.tafh.animemovieapp.api
 import com.tafh.animemovieapp.data.response.TopResponse
 import com.tafh.animemovieapp.data.response.AnimeResponse
 import com.tafh.animemovieapp.data.response.GenreResponse
+import com.tafh.animemovieapp.data.response.ScheduleResponse
 import com.tafh.animemovieapp.data.response.day.TuesdayResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -51,8 +52,8 @@ interface ApiService {
             @Path("id") id: Int?
     ) : Response<AnimeResponse>
 
-//    @GET("schedule")
-//    suspend fun getAllSchedule() : Response<ScheduleResponse>
+    @GET("schedule")
+    suspend fun getSchedule() : Response<ScheduleResponse>
 
 //    @GET("schedule/sunday")
 //    suspend fun getScheduleSunday() : Response<SundayResponse>
@@ -60,8 +61,8 @@ interface ApiService {
 //    @GET("schedule/monday")
 //    suspend fun getScheduleMonday() : Response<MondayResponse>
 
-    @GET("schedule/tuesday")
-    suspend fun getScheduleTuesday() : Response<TuesdayResponse>
+//    @GET("schedule/tuesday")
+//    suspend fun getScheduleTuesday() : Response<TuesdayResponse>
 
 //    @GET("schedule/wednesday")
 //    suspend fun getScheduleWednesday() : Response<WednesdayResponse>

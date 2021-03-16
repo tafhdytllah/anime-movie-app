@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tafh.animemovieapp.data.repository.AnimeRepository
+import com.tafh.animemovieapp.data.response.ScheduleResponse
 import com.tafh.animemovieapp.data.response.TopResponse
 import com.tafh.animemovieapp.data.response.day.TuesdayResponse
 import kotlinx.coroutines.launch
@@ -16,18 +17,18 @@ class BerandaViewModel @ViewModelInject constructor(
 
     val topList: MutableLiveData<Response<TopResponse>> = MutableLiveData()
 
-    val animeTuesday: MutableLiveData<Response<TuesdayResponse>> = MutableLiveData()
+    val episodeTerbaru: MutableLiveData<Response<ScheduleResponse>> = MutableLiveData()
 
     init {
         getTopList()
-        getEpisodeTerbaru()
+        getSchedule()
     }
 
-    private fun getEpisodeTerbaru() = viewModelScope.launch {
+    private fun getSchedule() = viewModelScope.launch {
         val today = "tuesday"
 
-        val response = repository.getAnimeTuesday()
-        animeTuesday.value = response
+        val response = repository.getSchedule()
+        episodeTerbaru.value = response
     }
 
     private fun getTopList() = viewModelScope.launch {

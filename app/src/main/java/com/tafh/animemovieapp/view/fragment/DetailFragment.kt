@@ -1,6 +1,8 @@
 package com.tafh.animemovieapp.view.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +21,12 @@ import com.tafh.animemovieapp.data.response.AnimeResponse
 import com.tafh.animemovieapp.databinding.FragmentDetailBinding
 import com.tafh.animemovieapp.viewmodels.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import okio.IOException
+import java.net.URL
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -62,7 +70,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 placeholder(R.drawable.ic_image)
                 error(R.drawable.ic_image_error)
             }
-            ivImage.load(anime.imageUrl) {
+
+            val imageUrl = anime.imageUrl
+
+            ivImage.load(imageUrl) {
                 crossfade(true)
                 crossfade(1000)
                 placeholder(R.drawable.ic_image)

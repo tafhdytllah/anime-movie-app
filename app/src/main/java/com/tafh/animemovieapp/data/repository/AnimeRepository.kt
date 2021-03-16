@@ -29,11 +29,13 @@ class AnimeRepository @Inject constructor(
 
     suspend fun getDetail(id: Int) = apiService.getDetail(id)
 
+    suspend fun getSchedule() = apiService.getSchedule()
+
 //    suspend fun getScheduleSunday() = apiService.getScheduleSunday()
 //
 //    suspend fun getScheduleMonday() = apiService.getScheduleMonday()
 
-    suspend fun getAnimeTuesday() = apiService.getScheduleTuesday()
+//    suspend fun getAnimeTuesday() = apiService.getScheduleTuesday()
 
 //    suspend fun getScheduleWednesday() = apiService.getScheduleWednesday()
 
