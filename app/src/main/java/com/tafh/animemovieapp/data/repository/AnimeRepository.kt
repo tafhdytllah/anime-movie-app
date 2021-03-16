@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AnimeRepository @Inject constructor(
         private val apiService: ApiService
 ) {
-    val getTopList =
+    fun getTopList() =
         Pager(
                 config = PagingConfig(
                         pageSize = 10,
@@ -18,6 +18,13 @@ class AnimeRepository @Inject constructor(
                 }
         ).liveData
 
+    fun getGenreList(genreId: Int) = Pager(
+            config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = {
+                AnimeGenrePagingSource(apiService = apiService, genreId = genreId)
+            }
+    ).liveData
+
     suspend fun getTop() = apiService.getTopList(1)
 
     suspend fun getDetail(id: Int) = apiService.getDetail(id)
@@ -25,10 +32,15 @@ class AnimeRepository @Inject constructor(
 //    suspend fun getScheduleSunday() = apiService.getScheduleSunday()
 //
 //    suspend fun getScheduleMonday() = apiService.getScheduleMonday()
-//    suspend fun getScheduleTuesday() = apiService.getScheduleTuesday()
+
+    suspend fun getAnimeTuesday() = apiService.getScheduleTuesday()
+
 //    suspend fun getScheduleWednesday() = apiService.getScheduleWednesday()
+
 //    suspend fun getScheduleThursday() = apiService.getScheduleThursday()
+
 //    suspend fun getScheduleFriday() = apiService.getScheduleFriday()
+
 //    suspend fun getScheduleSaturday() = apiService.getScheduleSaturday()
 
 

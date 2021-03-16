@@ -7,23 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
-import com.tafh.animemovieapp.data.model.top.Top
+import com.tafh.animemovieapp.data.model.Anime
 import com.tafh.animemovieapp.databinding.ItemTopListBinding
 
 
-class TopAdapter(
-        private val listener: onItemClickListener
-) : ListAdapter<Top, TopAdapter.TopViewHolder>(TopDiffCallback) {
+class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback) {
 
     val MAX_ITEM = 10
 
     companion object {
-        private val TopDiffCallback = object : DiffUtil.ItemCallback<Top>() {
-            override fun areItemsTheSame(oldItem: Top, newItem: Top): Boolean {
+        private val TopDiffCallback = object : DiffUtil.ItemCallback<Anime>() {
+            override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem.malId == newItem.malId
             }
 
-            override fun areContentsTheSame(oldItem: Top, newItem: Top): Boolean {
+            override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem == newItem
             }
 
@@ -32,21 +30,8 @@ class TopAdapter(
 
     inner class TopViewHolder(private val binding: ItemTopListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener{
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    if (item != null) {
-                        listener.onItemClick(item)
-                    }
 
-                }
-
-            }
-        }
-
-        fun bind(item: Top) {
+        fun bind(item: Anime) {
             binding.apply {
                 ivImage.load(item.imageUrl) {
                     crossfade(true)
@@ -57,6 +42,17 @@ class TopAdapter(
 
                 tvScore.text = item.score.toString()
                 tvTitle.text = item.title
+
+                binding.root.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val item = getItem(position)
+                        if (item != null) {
+                            onItemClickCallback?.onItemClick(item)
+                        }
+
+                    }
+                }
             }
         }
     }
@@ -85,10 +81,17 @@ class TopAdapter(
         return value
     }
 
+    private var onItemClickCallback: OnItemClickCallback? = null
 
-    interface onItemClickListener {
-        fun onItemClick(top: Top)
+    fun setOnItemClickCallBack(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
     }
+
+    interface OnItemClickCallback {
+        fun onItemClick(anime: Anime)
+    }
+
+
 
 
 }

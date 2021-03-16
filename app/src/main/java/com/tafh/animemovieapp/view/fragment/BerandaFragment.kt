@@ -8,23 +8,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.tafh.animemovieapp.adapters.GenreListAdapter
-import com.tafh.animemovieapp.adapters.SundayAdapter
+import com.tafh.animemovieapp.R
+import com.tafh.animemovieapp.adapters.GenreAdapter
+import com.tafh.animemovieapp.adapters.AnimeDayAdapter
 import com.tafh.animemovieapp.adapters.TopAdapter
-import com.tafh.animemovieapp.data.model.GenreAnime
-import com.tafh.animemovieapp.data.model.top.Top
+import com.tafh.animemovieapp.data.model.Anime
+import com.tafh.animemovieapp.data.model.GenreList
 import com.tafh.animemovieapp.databinding.FragmentBerandaBinding
 import com.tafh.animemovieapp.viewmodels.BerandaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BerandaFragment : Fragment(), TopAdapter.onItemClickListener {
+class BerandaFragment : Fragment(R.layout.fragment_beranda) {
 
     private lateinit var binding: FragmentBerandaBinding
 
     private val viewModel: BerandaViewModel by lazy {
         ViewModelProvider(this).get(BerandaViewModel::class.java)
     }
+
+    lateinit var topAdapter: TopAdapter
+    lateinit var genreAdapter: GenreAdapter
+    lateinit var animeDayAdapter: AnimeDayAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +38,9 @@ class BerandaFragment : Fragment(), TopAdapter.onItemClickListener {
         binding = FragmentBerandaBinding.inflate(inflater)
         context ?: return binding.root
 
-        setupAdapter()
+        setupTopAdapter()
+        setupGenreAdapter()
+        setupAnimeDayADapter()
 
         binding.tvTopLihatSemua.setOnClickListener{
             findNavController().navigate(BerandaFragmentDirections.actionBerandaToTopListFragment())
@@ -42,42 +49,60 @@ class BerandaFragment : Fragment(), TopAdapter.onItemClickListener {
         return binding.root
     }
 
-    private fun setupAdapter() {
-        val topAdapter = TopAdapter(this)
-        binding.rvTop.adapter = topAdapter
-        subscribeTop(topAdapter)
+    private fun setupAnimeDayADapter() {
+        animeDayAdapter = AnimeDayAdapter()
+        with(binding.rvEpisodeTerbaru) {
+            adapter = animeDayAdapter
+        }
+        subscribeAnimeDay(animeDayAdapter)
+    }
 
-        val genreAdapter = GenreListAdapter()
+    private fun setupGenreAdapter() {
+        genreAdapter = GenreAdapter()
         binding.rvGenre.adapter = genreAdapter
-        setUiGenre(genreAdapter)
-
-        val sundayAdapter = SundayAdapter()
-        binding.rvMinggu.adapter = sundayAdapter
-//        subscribeSundayList(sundayAdapter)
-
-    }
-
-//    private fun subscribeSundayList(adapter: SundayAdapter) {
-//        viewModel.scheduleSunday.observe(viewLifecycleOwner) {
-//            if (it.isSuccessful) {
-//                val response = it.body()?.sunday
-//                adapter.setData(response)
-//            } else {
-//                Log.d("LOG", "${it.errorBody()}")
-//            }
-//        }
-//    }
-
-    private fun setUiGenre(adapter: GenreListAdapter) {
         val genreList = setDataGenre()
-        adapter.setData(genreList)
+        genreAdapter.setData(genreList)
+
+        genreAdapter.setOnItemClickCallback(object : GenreAdapter.OnItemClickCallback {
+            override fun OnItemClick(genreList: GenreList) {
+                val action = BerandaFragmentDirections.actionBerandaToGenreListFragment(genreList.id, genreList.name)
+                findNavController().navigate(action)
+            }
+
+        })
     }
 
-    private fun subscribeTop(adapter: TopAdapter) {
+    private fun setupTopAdapter() {
+        topAdapter = TopAdapter()
+        binding.rvTop.adapter = topAdapter
+        subscribeTop()
+        topAdapter.setOnItemClickCallBack(object : TopAdapter.OnItemClickCallback {
+            override fun onItemClick(top: Anime) {
+                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+                findNavController().navigate(action)
+            }
+
+        })
+    }
+
+
+    private fun subscribeAnimeDay(adapter: AnimeDayAdapter) {
+
+        viewModel.animeTuesday.observe(viewLifecycleOwner) {
+            if (it.isSuccessful) {
+                val response = it.body()?.tuesday
+                adapter.setData(response)
+            } else {
+                Log.d("LOG", "${it.errorBody()}")
+            }
+        }
+    }
+
+    private fun subscribeTop() {
         viewModel.topList.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
                 val list = it.body()?.top
-                adapter.submitList(list)
+                topAdapter.submitList(list)
             } else {
                 Log.d("LOG", "${it.errorBody()}")
             }
@@ -85,58 +110,58 @@ class BerandaFragment : Fragment(), TopAdapter.onItemClickListener {
     }
 
 
-    override fun onItemClick(top: Top) {
-        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-        findNavController().navigate(action)
-    }
+//    override fun onItemClick(top: Top) {
+//        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
+//        findNavController().navigate(action)
+//    }
 
 
-    private fun setDataGenre() : List<GenreAnime>{
-        val list = mutableListOf<GenreAnime>()
+    private fun setDataGenre() : List<GenreList>{
+        val list = mutableListOf<GenreList>()
 
-        list.add(GenreAnime(1, "Action"))
-        list.add(GenreAnime(2, "Adventure"))
-        list.add(GenreAnime(4, "Comedy"))
-        list.add(GenreAnime(6, "Demons"))
-        list.add(GenreAnime(7, "Mystery"))
+        list.add(GenreList(1, "Action"))
+        list.add(GenreList(2, "Adventure"))
+        list.add(GenreList(4, "Comedy"))
+        list.add(GenreList(6, "Demons"))
+        list.add(GenreList(7, "Mystery"))
 
-        list.add(GenreAnime(8, "Drama"))
-        list.add(GenreAnime(9, "Ecchi"))
-        list.add(GenreAnime(10, "Fantasy"))
-        list.add(GenreAnime(11, "Game"))
-        list.add(GenreAnime(13, "Historical"))
+        list.add(GenreList(8, "Drama"))
+        list.add(GenreList(9, "Ecchi"))
+        list.add(GenreList(10, "Fantasy"))
+        list.add(GenreList(11, "Game"))
+        list.add(GenreList(13, "Historical"))
 
-        list.add(GenreAnime(14, "Horror"))
-        list.add(GenreAnime(16, "Magic"))
-        list.add(GenreAnime(17, "Martial Arts"))
-        list.add(GenreAnime(18, "Mecha"))
-        list.add(GenreAnime(19, "Music"))
+        list.add(GenreList(14, "Horror"))
+        list.add(GenreList(16, "Magic"))
+        list.add(GenreList(17, "Martial Arts"))
+        list.add(GenreList(18, "Mecha"))
+        list.add(GenreList(19, "Music"))
 
-        list.add(GenreAnime(20, "Parody"))
-        list.add(GenreAnime(21, "Samurai"))
-        list.add(GenreAnime(22, "Romance"))
-        list.add(GenreAnime(23, "School"))
-        list.add(GenreAnime(24, "Sci-Fi"))
+        list.add(GenreList(20, "Parody"))
+        list.add(GenreList(21, "Samurai"))
+        list.add(GenreList(22, "Romance"))
+        list.add(GenreList(23, "School"))
+        list.add(GenreList(24, "Sci-Fi"))
 
-        list.add(GenreAnime(25, "Shoujo"))
-        list.add(GenreAnime(26, "Shoujo Ai"))
-        list.add(GenreAnime(27, "Shounen"))
-        list.add(GenreAnime(29, "Space"))
-        list.add(GenreAnime(30, "Sports"))
+        list.add(GenreList(25, "Shoujo"))
+        list.add(GenreList(26, "Shoujo Ai"))
+        list.add(GenreList(27, "Shounen"))
+        list.add(GenreList(29, "Space"))
+        list.add(GenreList(30, "Sports"))
 
-        list.add(GenreAnime(31, "Super Power"))
-        list.add(GenreAnime(32, "Vampire"))
-        list.add(GenreAnime(35, "Harem"))
-        list.add(GenreAnime(36, "Slice ofLife"))
-        list.add(GenreAnime(37, "Supernatural"))
+        list.add(GenreList(31, "Super Power"))
+        list.add(GenreList(32, "Vampire"))
+        list.add(GenreList(35, "Harem"))
+        list.add(GenreList(36, "Slice ofLife"))
+        list.add(GenreList(37, "Supernatural"))
 
-        list.add(GenreAnime(38, "Military"))
-        list.add(GenreAnime(39, "Police"))
-        list.add(GenreAnime(40, "Psychological"))
-        list.add(GenreAnime(41, "Thriller"))
-        list.add(GenreAnime(42, "Seinen"))
+        list.add(GenreList(38, "Military"))
+        list.add(GenreList(39, "Police"))
+        list.add(GenreList(40, "Psychological"))
+        list.add(GenreList(41, "Thriller"))
+        list.add(GenreList(42, "Seinen"))
 
-        list.add(GenreAnime(43, "Josei"))
+        list.add(GenreList(43, "Josei"))
 
 
         return list

@@ -13,8 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.tafh.animemovieapp.R
-import com.tafh.animemovieapp.data.model.anime.Genre
-import com.tafh.animemovieapp.data.model.anime.Studio
+import com.tafh.animemovieapp.data.model.Genre
+import com.tafh.animemovieapp.data.model.Studio
+import com.tafh.animemovieapp.data.response.AnimeResponse
 import com.tafh.animemovieapp.databinding.FragmentDetailBinding
 import com.tafh.animemovieapp.viewmodels.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getDetail(malId).observe(viewLifecycleOwner, Observer {
             if (it.isSuccessful) {
                 val anime = it.body()
-//                setDataUi(anime)
+                setDataUi(anime)
             } else {
                 Log.d("LOG", "error = ${it.message()}")
             }
@@ -52,37 +53,37 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         return binding.root
     }
 
-//    @SuppressLint("SetTextI18n")
-//    private fun setDataUi(anime: AnimeResponse?) {
-//        binding.apply {
-//            ivImageDetail.load(anime!!.imageUrl) {
-//                crossfade(true)
-//                crossfade(1000)
-//                placeholder(R.drawable.ic_image)
-//                error(R.drawable.ic_image_error)
-//            }
-//            ivImage.load(anime.imageUrl) {
-//                crossfade(true)
-//                crossfade(1000)
-//                placeholder(R.drawable.ic_image)
-//                error(R.drawable.ic_image_error)
-//            }
-//            tvTitle.text = anime.title
-//
-//            tvRilis.text = anime.aired.string
-//            tvStatus.text = anime.status
-//            tvScore.text = anime.score.toString()
-//            tvDuration.text = anime.duration
-//
-//            val studioList = studioString(anime.studios)
-//            tvStudios.text = studioList
-//
-//            val genreList = genreString(anime.genres)
-//            tvGenres.text = genreList
-//
-//            tvSynopsis.text = anime.synopsis
-//        }
-//    }
+    @SuppressLint("SetTextI18n")
+    private fun setDataUi(anime: AnimeResponse?) {
+        binding.apply {
+            ivImageDetail.load(anime!!.imageUrl) {
+                crossfade(true)
+                crossfade(1000)
+                placeholder(R.drawable.ic_image)
+                error(R.drawable.ic_image_error)
+            }
+            ivImage.load(anime.imageUrl) {
+                crossfade(true)
+                crossfade(1000)
+                placeholder(R.drawable.ic_image)
+                error(R.drawable.ic_image_error)
+            }
+            tvTitle.text = anime.title
+
+            tvRilis.text = anime.aired.string
+            tvStatus.text = anime.status
+            tvScore.text = anime.score.toString()
+            tvDuration.text = anime.duration
+
+            val studioList = studioString(anime.studios)
+            tvStudios.text = studioList
+
+            val genreList = genreString(anime.genres)
+            tvGenres.text = genreList
+
+            tvSynopsis.text = anime.synopsis
+        }
+    }
 
     private fun studioString(list: List<Studio>): String{
 

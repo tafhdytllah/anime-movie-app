@@ -8,24 +8,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
-import com.tafh.animemovieapp.data.model.top.Top
+import com.tafh.animemovieapp.data.model.Anime
 import com.tafh.animemovieapp.databinding.ItemTopListBinding
 
 
 class TopListAdapter(
         private val listener: onItemClickListener
-) : PagingDataAdapter<Top, TopListAdapter.TopViewHolder>(TopDiffCallback) {
+) : PagingDataAdapter<Anime, TopListAdapter.TopViewHolder>(TopDiffCallback) {
 
     val LOADING_ITEM = 0
     val ANIME_ITEM = 1
 
     companion object {
-        private val TopDiffCallback = object : DiffUtil.ItemCallback<Top>() {
-            override fun areItemsTheSame(oldItem: Top, newItem: Top): Boolean {
+        private val TopDiffCallback = object : DiffUtil.ItemCallback<Anime>() {
+            override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem.malId == newItem.malId
             }
 
-            override fun areContentsTheSame(oldItem: Top, newItem: Top): Boolean {
+            override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem == newItem
             }
 
@@ -49,7 +49,7 @@ class TopListAdapter(
             }
         }
 
-        fun bind(item: Top) {
+        fun bind(item: Anime) {
             binding.apply {
                 ivImage.load(item.imageUrl) {
                     crossfade(true)
@@ -82,7 +82,7 @@ class TopListAdapter(
 
 
     interface onItemClickListener {
-        fun onItemClick(top: Top)
+        fun onItemClick(anime: Anime)
     }
 
 

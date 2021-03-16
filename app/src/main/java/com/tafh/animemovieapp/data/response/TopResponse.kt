@@ -2,7 +2,7 @@ package com.tafh.animemovieapp.data.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.tafh.animemovieapp.data.model.top.Top
+import com.tafh.animemovieapp.data.model.Anime
 
 data class TopResponse(
     @SerializedName("request_cache_expiry")
@@ -11,5 +11,5 @@ data class TopResponse(
     val requestCached: Boolean,
     @SerializedName("request_hash")
     val requestHash: String,
-    val top: List<Top>
+    val top: List<Anime>
 )

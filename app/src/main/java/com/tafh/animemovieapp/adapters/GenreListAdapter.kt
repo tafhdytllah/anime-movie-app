@@ -2,42 +2,81 @@ package com.tafh.animemovieapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tafh.animemovieapp.data.model.GenreAnime
-import com.tafh.animemovieapp.databinding.ItemGenreListBinding
+import coil.load
+import com.tafh.animemovieapp.R
+import com.tafh.animemovieapp.data.model.Anime
+import com.tafh.animemovieapp.databinding.ItemAnimeGenreBinding
 
-class GenreListAdapter : RecyclerView.Adapter<GenreListAdapter.GenreViewHolder>() {
 
-    private var genreList = emptyList<GenreAnime>()
-    private val max_item = 20
+class GenreListAdapter(
+        private val listener: onItemClickListener
+) : PagingDataAdapter<Anime, GenreListAdapter.GenreViewHolder>(GenreDiffCallback){
 
-    inner class GenreViewHolder(private val binding: ItemGenreListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(genre: GenreAnime) {
-            binding.tvItemTitle.text = genre.name
+    val LOADING_ITEM = 0
+    val ANIME_ITEM = 1
+    
+    inner class GenreViewHolder(private val binding: ItemAnimeGenreBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
+            }
         }
 
+        fun bind(item: Anime) {
+            binding.apply {
+                ivImage.load(item.imageUrl) {
+                    crossfade(true)
+                    crossfade(1000)
+                    placeholder(R.drawable.ic_image)
+                    error(R.drawable.ic_image_error)
+                }
+
+                tvScore.text = item.score.toString()
+                tvTitle.text = item.title
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
-        return GenreViewHolder(ItemGenreListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    companion object {
+        private val GenreDiffCallback = object : DiffUtil.ItemCallback<Anime>() {
+            override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+                return oldItem.malId == newItem.malId
+            }
+
+            override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.bind(genreList[position])
-    }
-
-    override fun getItemCount(): Int {
-        if (genreList.size > max_item) {
-            return max_item
-        } else {
-            return genreList.size
+        val currentItem = getItem(position)
+        if (currentItem != null) {
+            holder.bind(currentItem)
         }
     }
 
-    fun setData(list: List<GenreAnime>) {
-        this.genreList = list
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
+        val view = ItemAnimeGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return GenreViewHolder(view)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return if (position == itemCount) ANIME_ITEM else LOADING_ITEM
+    }
 
+    interface onItemClickListener {
+        fun onItemClick(anime: Anime)
+    }
 }
