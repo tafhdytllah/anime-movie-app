@@ -25,8 +25,6 @@ class BerandaViewModel @ViewModelInject constructor(
     }
 
     private fun getSchedule() = viewModelScope.launch {
-        val today = "tuesday"
-
         val response = repository.getSchedule()
         episodeTerbaru.value = response
     }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
 import com.tafh.animemovieapp.data.model.Anime
-import com.tafh.animemovieapp.databinding.ItemTopListBinding
+import com.tafh.animemovieapp.databinding.ItemAnimeBinding
 
 
 class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback) {
@@ -28,7 +28,7 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
         }
     }
 
-    inner class TopViewHolder(private val binding: ItemTopListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TopViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
         fun bind(item: Anime) {
@@ -36,19 +36,18 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
                 ivImage.load(item.imageUrl) {
                     crossfade(true)
                     crossfade(1000)
-                    placeholder(R.drawable.ic_image)
                     error(R.drawable.ic_image_error)
                 }
 
                 tvScore.text = item.score.toString()
                 tvTitle.text = item.title
 
-                binding.root.setOnClickListener {
+                root.setOnClickListener {
                     val position = bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val item = getItem(position)
-                        if (item != null) {
-                            onItemClickCallback?.onItemClick(item)
+                        
+                        if (getItem(position) != null) {
+                            itemClickCallback?.onItemClick(item)
                         }
 
                     }
@@ -65,7 +64,7 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
-        return TopViewHolder(ItemTopListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return TopViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -81,13 +80,13 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
         return value
     }
 
-    private var onItemClickCallback: OnItemClickCallback? = null
+    private var itemClickCallback: onItemClickCallback? = null
 
-    fun setOnItemClickCallBack(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
+    fun setOnItemClickCallBack(onItemClickCallback: onItemClickCallback) {
+        this.itemClickCallback = onItemClickCallback
     }
 
-    interface OnItemClickCallback {
+    interface onItemClickCallback {
         fun onItemClick(anime: Anime)
     }
 

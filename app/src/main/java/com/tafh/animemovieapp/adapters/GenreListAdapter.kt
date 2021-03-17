@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
 import com.tafh.animemovieapp.data.model.Anime
-import com.tafh.animemovieapp.databinding.ItemAnimeGenreBinding
+import com.tafh.animemovieapp.databinding.ItemAnimeBinding
 
 
 class GenreListAdapter(
@@ -18,7 +18,7 @@ class GenreListAdapter(
     val LOADING_ITEM = 0
     val ANIME_ITEM = 1
     
-    inner class GenreViewHolder(private val binding: ItemAnimeGenreBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class GenreViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
@@ -37,7 +37,6 @@ class GenreListAdapter(
                 ivImage.load(item.imageUrl) {
                     crossfade(true)
                     crossfade(1000)
-                    placeholder(R.drawable.ic_image)
                     error(R.drawable.ic_image_error)
                 }
 
@@ -68,7 +67,7 @@ class GenreListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
-        val view = ItemAnimeGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GenreViewHolder(view)
     }
 

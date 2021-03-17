@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:spanCount="3"
-            tools:listitem="@layout/item_anime_genre" />
+            tools:listitem="@layout/item_anime" />
 
         <ProgressBar
             android:id="@+id/progressBar"

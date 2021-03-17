@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.tafh.animemovieapp.R
 import com.tafh.animemovieapp.data.model.Anime
-import com.tafh.animemovieapp.databinding.ItemTopListBinding
+import com.tafh.animemovieapp.databinding.ItemAnimeBinding
 
 
 class TopListAdapter(
@@ -32,7 +32,7 @@ class TopListAdapter(
         }
     }
 
-    inner class TopViewHolder(private val binding: ItemTopListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TopViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener{
@@ -54,7 +54,6 @@ class TopListAdapter(
                 ivImage.load(item.imageUrl) {
                     crossfade(true)
                     crossfade(1000)
-                    placeholder(R.drawable.ic_image)
                     error(R.drawable.ic_image_error)
                 }
 
@@ -72,7 +71,7 @@ class TopListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
-        return TopViewHolder(ItemTopListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return TopViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemViewType(position: Int): Int {

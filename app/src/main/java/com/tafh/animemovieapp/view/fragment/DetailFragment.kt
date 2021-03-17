@@ -67,7 +67,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             ivImageDetail.load(anime!!.imageUrl) {
                 crossfade(true)
                 crossfade(1000)
-                placeholder(R.drawable.ic_image)
                 error(R.drawable.ic_image_error)
             }
 
@@ -76,7 +75,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             ivImage.load(imageUrl) {
                 crossfade(true)
                 crossfade(1000)
-                placeholder(R.drawable.ic_image)
                 error(R.drawable.ic_image_error)
             }
             tvTitle.text = anime.title

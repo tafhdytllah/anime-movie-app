@@ -31,19 +31,19 @@ class AnimeRepository @Inject constructor(
 
     suspend fun getSchedule() = apiService.getSchedule()
 
-//    suspend fun getScheduleSunday() = apiService.getScheduleSunday()
-//
-//    suspend fun getScheduleMonday() = apiService.getScheduleMonday()
+    suspend fun getScheduleSunday() = apiService.getScheduleSunday()
 
-//    suspend fun getAnimeTuesday() = apiService.getScheduleTuesday()
+    suspend fun getScheduleMonday() = apiService.getScheduleMonday()
 
-//    suspend fun getScheduleWednesday() = apiService.getScheduleWednesday()
+    suspend fun getAnimeTuesday() = apiService.getScheduleTuesday()
 
-//    suspend fun getScheduleThursday() = apiService.getScheduleThursday()
+    suspend fun getScheduleWednesday() = apiService.getScheduleWednesday()
 
-//    suspend fun getScheduleFriday() = apiService.getScheduleFriday()
+    suspend fun getScheduleThursday() = apiService.getScheduleThursday()
 
-//    suspend fun getScheduleSaturday() = apiService.getScheduleSaturday()
+    suspend fun getScheduleFriday() = apiService.getScheduleFriday()
+
+    suspend fun getScheduleSaturday() = apiService.getScheduleSaturday()
 
 
 }

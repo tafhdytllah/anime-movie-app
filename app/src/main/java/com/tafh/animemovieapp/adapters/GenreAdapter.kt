@@ -15,7 +15,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
         fun bind(genreList: GenreList) {
             binding.tvItemTitle.text = genreList.name
             binding.root.setOnClickListener {
-                onItemClickCallback?.OnItemClick(genreList)
+                itemClickCallback?.onItemClick(genreList)
             }
         }
 
@@ -42,14 +42,14 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
         notifyDataSetChanged()
     }
 
-    private var onItemClickCallback: OnItemClickCallback? = null
+    private var itemClickCallback: onItemClickCallback? = null
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
+    fun setOnItemClickCallback(onItemClickCallback: onItemClickCallback) {
+        this.itemClickCallback = onItemClickCallback
     }
 
-    interface OnItemClickCallback {
-        fun OnItemClick(genreList: GenreList)
+    interface onItemClickCallback {
+        fun onItemClick(genreList: GenreList)
     }
 
 

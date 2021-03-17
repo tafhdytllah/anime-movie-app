@@ -4,7 +4,7 @@ import com.tafh.animemovieapp.data.response.TopResponse
 import com.tafh.animemovieapp.data.response.AnimeResponse
 import com.tafh.animemovieapp.data.response.GenreResponse
 import com.tafh.animemovieapp.data.response.ScheduleResponse
-import com.tafh.animemovieapp.data.response.day.TuesdayResponse
+import com.tafh.animemovieapp.data.response.day.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -55,26 +55,26 @@ interface ApiService {
     @GET("schedule")
     suspend fun getSchedule() : Response<ScheduleResponse>
 
-//    @GET("schedule/sunday")
-//    suspend fun getScheduleSunday() : Response<SundayResponse>
-//
-//    @GET("schedule/monday")
-//    suspend fun getScheduleMonday() : Response<MondayResponse>
+    @GET("schedule/sunday")
+    suspend fun getScheduleSunday() : Response<SundayResponse>
 
-//    @GET("schedule/tuesday")
-//    suspend fun getScheduleTuesday() : Response<TuesdayResponse>
+    @GET("schedule/monday")
+    suspend fun getScheduleMonday() : Response<MondayResponse>
 
-//    @GET("schedule/wednesday")
-//    suspend fun getScheduleWednesday() : Response<WednesdayResponse>
-//
-//    @GET("schedule/thursday")
-//    suspend fun getScheduleThursday() : Response<ThursdayResponse>
-//
-//    @GET("schedule/friday")
-//    suspend fun getScheduleFriday() : Response<FridayResponse>
-//
-//    @GET("schedule/saturday")
-//    suspend fun getScheduleSaturday() : Response<SaturdayResponse>
+    @GET("schedule/tuesday")
+    suspend fun getScheduleTuesday() : Response<TuesdayResponse>
+
+    @GET("schedule/wednesday")
+    suspend fun getScheduleWednesday() : Response<WednesdayResponse>
+
+    @GET("schedule/thursday")
+    suspend fun getScheduleThursday() : Response<ThursdayResponse>
+
+    @GET("schedule/friday")
+    suspend fun getScheduleFriday() : Response<FridayResponse>
+
+    @GET("schedule/saturday")
+    suspend fun getScheduleSaturday() : Response<SaturdayResponse>
 
 
 

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_beranda_to_genreListFragment"
             app:destination="@id/genreListFragment" />
+        <action
+            android:id="@+id/action_beranda_to_scheduleListFragment"
+            app:destination="@id/scheduleListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detail"
@@ -52,5 +55,14 @@
         <argument
             android:name="genreName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleListFragment"
+        android:name="com.tafh.animemovieapp.view.fragment.ScheduleListFragment"
+        android:label="fragment_schedule_list"
+        tools:layout="@layout/fragment_schedule_list" >
+        <action
+            android:id="@+id/action_scheduleListFragment_to_detail"
+            app:destination="@id/detail" />
     </fragment>
 </navigation>

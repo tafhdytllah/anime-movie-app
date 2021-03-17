@@ -1,27 +1,23 @@
 package com.tafh.animemovieapp.view.fragment
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tafh.animemovieapp.R
 import com.tafh.animemovieapp.adapters.GenreAdapter
-import com.tafh.animemovieapp.adapters.AnimeDayAdapter
+import com.tafh.animemovieapp.adapters.ScheduleAdapter
 import com.tafh.animemovieapp.adapters.TopAdapter
 import com.tafh.animemovieapp.data.model.Anime
 import com.tafh.animemovieapp.data.model.GenreList
-import com.tafh.animemovieapp.data.response.ScheduleResponse
 import com.tafh.animemovieapp.databinding.FragmentBerandaBinding
 import com.tafh.animemovieapp.viewmodels.BerandaViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -39,7 +35,7 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
 
     lateinit var topAdapter: TopAdapter
     lateinit var genreAdapter: GenreAdapter
-    lateinit var animeDayAdapter: AnimeDayAdapter
+    lateinit var scheduleAdapter: ScheduleAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -50,22 +46,50 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
 
         setupTopAdapter()
         setupGenreAdapter()
-        setupAnimeDayAdapter()
+        setupScheduleAdapter()
 
         binding.tvTopLihatSemua.setOnClickListener {
             findNavController().navigate(BerandaFragmentDirections.actionBerandaToTopListFragment())
         }
 
+        binding.tvScheduleLihatSemua.setOnClickListener {
+            findNavController().navigate(BerandaFragmentDirections.actionBerandaToScheduleListFragment())
+        }
+
         return binding.root
     }
 
-    private fun setupAnimeDayAdapter() {
-        animeDayAdapter = AnimeDayAdapter()
-        with(binding.rvEpisodeTerbaru) {
-            adapter = animeDayAdapter
-        }
-        subscribeAnimeDay(animeDayAdapter)
+
+    private fun setupTopAdapter() {
+        topAdapter = TopAdapter()
+        binding.rvTop.adapter = topAdapter
+        subscribeTop()
+        topAdapter.setOnItemClickCallBack(object : TopAdapter.onItemClickCallback {
+            override fun onItemClick(anime: Anime) {
+                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
+                findNavController().navigate(action)
+            }
+
+        })
     }
+
+    private fun setupScheduleAdapter() {
+        scheduleAdapter = ScheduleAdapter()
+        with(binding.rvSchedule) {
+            adapter = scheduleAdapter
+        }
+        subscribeSchedule(scheduleAdapter)
+
+        scheduleAdapter.setOnItemClickListener(object : ScheduleAdapter.onItemClickCallback {
+            override fun onItemClick(anime: Anime) {
+                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
+                findNavController().navigate(action)
+            }
+
+        })
+    }
+
+
 
     private fun setupGenreAdapter() {
         genreAdapter = GenreAdapter()
@@ -73,8 +97,8 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         val genreList = setDataGenre()
         genreAdapter.setData(genreList)
 
-        genreAdapter.setOnItemClickCallback(object : GenreAdapter.OnItemClickCallback {
-            override fun OnItemClick(genreList: GenreList) {
+        genreAdapter.setOnItemClickCallback(object : GenreAdapter.onItemClickCallback {
+            override fun onItemClick(genreList: GenreList) {
                 val action = BerandaFragmentDirections.actionBerandaToGenreListFragment(genreList.id, genreList.name)
                 findNavController().navigate(action)
             }
@@ -82,21 +106,9 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         })
     }
 
-    private fun setupTopAdapter() {
-        topAdapter = TopAdapter()
-        binding.rvTop.adapter = topAdapter
-        subscribeTop()
-        topAdapter.setOnItemClickCallBack(object : TopAdapter.OnItemClickCallback {
-            override fun onItemClick(top: Anime) {
-                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-                findNavController().navigate(action)
-            }
-
-        })
-    }
 
 
-    private fun subscribeAnimeDay(adapter: AnimeDayAdapter) {
+    private fun subscribeSchedule(adapter: ScheduleAdapter) {
 
         val currentDay = getCurrentDay().toLowerCase(Locale.ROOT)
 

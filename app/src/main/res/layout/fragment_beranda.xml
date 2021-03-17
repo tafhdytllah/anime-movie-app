@@ -114,7 +114,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTopTitle"
                     tools:itemCount="10"
-                    tools:listitem="@layout/item_top_list" />
+                    tools:listitem="@layout/item_anime" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -157,9 +157,9 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Episode terbaru -->
+            <!-- Schedule -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/episodeontainer"
+                android:id="@+id/scheduleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -173,7 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@id/genreContainer">
 
                 <TextView
-                    android:id="@+id/tvEpisodeTitle"
+                    android:id="@+id/tvScheduleTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Episode terbaru"
@@ -184,19 +184,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvEpisodeLihatSemua"
+                    android:id="@+id/tvScheduleLihatSemua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lihat semua"
                     android:textColor="@color/anime_white"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvEpisodeTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvScheduleTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/tvEpisodeTitle" />
+                    app:layout_constraintStart_toEndOf="@+id/tvScheduleTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvEpisodeTerbaru"
+                    android:id="@+id/rvSchedule"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -205,10 +205,10 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvEpisodeTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvScheduleTitle"
                     app:spanCount="3"
                     tools:itemCount="9"
-                    tools:listitem="@layout/item_episode_list" />
+                    tools:listitem="@layout/item_anime" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -225,7 +225,7 @@
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/episodeontainer">
+                app:layout_constraintTop_toBottomOf="@id/scheduleContainer">
 
                 <TextView
                     android:layout_width="match_parent"
