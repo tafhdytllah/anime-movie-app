@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -37,6 +38,7 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
     lateinit var genreAdapter: GenreAdapter
     lateinit var scheduleAdapter: ScheduleAdapter
 
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -44,9 +46,16 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         binding = FragmentBerandaBinding.inflate(inflater)
         context ?: return binding.root
 
+
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(BerandaFragmentDirections.actionBerandaToSearchFragment())
+        }
+
         setupTopAdapter()
         setupGenreAdapter()
         setupScheduleAdapter()
+
+
 
         binding.tvTopLihatSemua.setOnClickListener {
             findNavController().navigate(BerandaFragmentDirections.actionBerandaToTopListFragment())
