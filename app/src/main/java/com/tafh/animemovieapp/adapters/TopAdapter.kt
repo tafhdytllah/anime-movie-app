@@ -33,8 +33,8 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
         fun bind(item: Anime) {
             binding.apply {
                 ivImage.load(item.imageUrl) {
-                    crossfade(true)
-                    crossfade(1000)
+                    crossfade(false)
+                    crossfade(800)
                     error(R.drawable.ic_image_error)
                 }
 

@@ -4,13 +4,14 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-
     <color name="anime_blue_500">#303458</color>
     <color name="anime_blue_700">#1f2340</color>
     <color name="anime_blue_900">#181B31</color>
     <color name="anime_white">#deffffff</color>
     <color name="white_grey">#DE817E7E</color>
     <color name="anime_black">#de000000</color>
+
+    <color name="shimmer_color">#dddddd</color>
 
     <color name="anime_blue_white">#2C7AFF</color>
 </resources>

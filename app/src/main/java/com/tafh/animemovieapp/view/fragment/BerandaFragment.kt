@@ -127,6 +127,8 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
                     else -> animeList = it.body()?.saturday
                 }
                 adapter.setData(animeList)
+                binding.shimmerScheduleContainer.stopShimmerAnimation();
+                binding.shimmerScheduleContainer.setVisibility(View.GONE);
             } else {
                 Log.d("LOG", "${it.errorBody()}")
             }
@@ -157,6 +159,8 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
             if (it.isSuccessful) {
                 val list = it.body()?.top
                 topAdapter.submitList(list)
+                binding.shimmerTopContainer.stopShimmerAnimation();
+                binding.shimmerTopContainer.setVisibility(View.GONE);
             } else {
                 Log.d("LOG", "${it.errorBody()}")
             }
@@ -211,5 +215,16 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         return list
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.shimmerTopContainer.startShimmerAnimation()
+        binding.shimmerScheduleContainer.startShimmerAnimation()
+    }
+
+    override fun onPause() {
+        binding.shimmerTopContainer.stopShimmerAnimation()
+        binding.shimmerScheduleContainer.stopShimmerAnimation()
+        super.onPause()
+    }
 
 }

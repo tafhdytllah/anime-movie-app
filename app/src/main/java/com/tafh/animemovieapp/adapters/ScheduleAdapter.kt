@@ -20,7 +20,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>
             binding.apply {
                 ivImage.load(anime.imageUrl) {
                     crossfade(true)
-                    crossfade(1000)
+                    crossfade(800)
                     error(R.drawable.ic_image_error)
                 }
                 tvTitle.text = anime.title
