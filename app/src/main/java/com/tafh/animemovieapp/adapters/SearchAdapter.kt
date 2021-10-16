@@ -11,16 +11,15 @@ import com.tafh.animemovieapp.R
 import com.tafh.animemovieapp.data.model.Anime
 import com.tafh.animemovieapp.databinding.ItemAnimeBinding
 
-
-class TopListAdapter(
+class SearchAdapter(
     private val listener: onItemClickListener
-) : PagingDataAdapter<Anime, TopListAdapter.TopViewHolder>(TopDiffCallback) {
+) : PagingDataAdapter<Anime, SearchAdapter.SearchViewHolder>(SearchDiffCallback) {
 
     val LOADING_ITEM = 0
     val ANIME_ITEM = 1
 
     companion object {
-        private val TopDiffCallback = object : DiffUtil.ItemCallback<Anime>() {
+        private val SearchDiffCallback = object : DiffUtil.ItemCallback<Anime>() {
             override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem.malId == newItem.malId
             }
@@ -32,7 +31,7 @@ class TopListAdapter(
         }
     }
 
-    inner class TopViewHolder(private val binding: ItemAnimeBinding) :
+    inner class SearchViewHolder(private val binding: ItemAnimeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -64,30 +63,23 @@ class TopListAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+        val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: SearchAdapter.SearchViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
             holder.bind(currentItem)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
-        return TopViewHolder(
-            ItemAnimeBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
-
     override fun getItemViewType(position: Int): Int {
-        Log.d("ADAPTER", "$position, $itemCount")
         return if (position == itemCount) ANIME_ITEM else LOADING_ITEM
     }
 
     interface onItemClickListener {
         fun onItemClick(anime: Anime)
     }
-
 }

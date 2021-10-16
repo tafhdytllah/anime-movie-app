@@ -1,5 +1,6 @@
 package com.tafh.animemovieapp.viewmodels
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.tafh.animemovieapp.data.repository.AnimeRepository

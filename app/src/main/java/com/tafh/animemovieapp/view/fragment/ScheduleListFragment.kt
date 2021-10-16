@@ -87,49 +87,56 @@ class ScheduleListFragment : Fragment(R.layout.fragment_schedule_list) {
 
         sundayAdapter.setOnItemClickListener(object : SundayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         mondayAdapter.setOnItemClickListener(object : MondayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         tuesdayAdapter.setOnItemClickListener(object : TuesdayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         wednesdayAdapter.setOnItemClickListener(object : WednesdayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         thursdayAdapter.setOnItemClickListener(object : ThursdayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         fridayAdapter.setOnItemClickListener(object : FridayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })
 
         saturdayAdapter.setOnItemClickListener(object : SaturdayAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
+                val action =
+                    ScheduleListFragmentDirections.actionScheduleListFragmentToDetail(anime.malId)
                 findNavController().navigate(action)
             }
         })

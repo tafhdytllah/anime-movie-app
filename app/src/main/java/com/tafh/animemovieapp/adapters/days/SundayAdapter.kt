@@ -12,7 +12,8 @@ class SundayAdapter : RecyclerView.Adapter<SundayAdapter.SundayViewHolder>() {
 
     private var list = emptyList<Anime>()
 
-    inner class SundayViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SundayViewHolder(private val binding: ItemAnimeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(anime: Anime) {
             binding.apply {
                 ivImage.load(anime.imageUrl) {
@@ -31,10 +32,14 @@ class SundayAdapter : RecyclerView.Adapter<SundayAdapter.SundayViewHolder>() {
 
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SundayViewHolder {
-        return SundayViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return SundayViewHolder(
+            ItemAnimeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: SundayViewHolder, position: Int) {

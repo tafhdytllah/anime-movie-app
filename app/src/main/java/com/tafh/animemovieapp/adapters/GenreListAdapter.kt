@@ -11,14 +11,14 @@ import com.tafh.animemovieapp.data.model.Anime
 import com.tafh.animemovieapp.databinding.ItemAnimeBinding
 
 
-class GenreListAdapter(
-        private val listener: onItemClickListener
-) : PagingDataAdapter<Anime, GenreListAdapter.GenreViewHolder>(GenreDiffCallback){
+class GenreListAdapter(private val listener: onItemClickListener) :
+    PagingDataAdapter<Anime, GenreListAdapter.GenreViewHolder>(GenreDiffCallback) {
 
     val LOADING_ITEM = 0
     val ANIME_ITEM = 1
-    
-    inner class GenreViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class GenreViewHolder(private val binding: ItemAnimeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {

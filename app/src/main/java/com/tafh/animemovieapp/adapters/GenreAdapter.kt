@@ -11,7 +11,8 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
     private var genreList = emptyList<GenreList>()
     private val max_item = 20
 
-    inner class GenreViewHolder(private val binding: ItemGenreBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class GenreViewHolder(private val binding: ItemGenreBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(genreList: GenreList) {
             binding.tvItemTitle.text = genreList.name
             binding.root.setOnClickListener {
@@ -22,7 +23,13 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
-        return GenreViewHolder(ItemGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return GenreViewHolder(
+            ItemGenreBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {

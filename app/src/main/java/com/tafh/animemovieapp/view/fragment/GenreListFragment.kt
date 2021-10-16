@@ -19,7 +19,8 @@ import com.tafh.animemovieapp.viewmodels.GenreListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GenreListFragment : Fragment(R.layout.fragment_genre_list), GenreListAdapter.onItemClickListener {
+class GenreListFragment : Fragment(R.layout.fragment_genre_list),
+    GenreListAdapter.onItemClickListener {
 
     private val args by navArgs<GenreListFragmentArgs>()
 
@@ -62,8 +63,8 @@ class GenreListFragment : Fragment(R.layout.fragment_genre_list), GenreListAdapt
                 layoutManager = gridLayoutManager
                 setHasFixedSize(true)
                 adapter = genreAdapter.withLoadStateHeaderAndFooter(
-                        header = AnimeLoadStateAdapter { genreAdapter.retry() },
-                        footer = AnimeLoadStateAdapter { genreAdapter.retry() }
+                    header = AnimeLoadStateAdapter { genreAdapter.retry() },
+                    footer = AnimeLoadStateAdapter { genreAdapter.retry() }
                 )
             }
 
@@ -96,6 +97,5 @@ class GenreListFragment : Fragment(R.layout.fragment_genre_list), GenreListAdapt
         val direction = GenreListFragmentDirections.actionGenreListFragmentToDetail(anime.malId)
         findNavController().navigate(direction)
     }
-
 
 }

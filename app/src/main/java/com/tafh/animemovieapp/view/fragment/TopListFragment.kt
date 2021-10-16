@@ -1,6 +1,7 @@
 package com.tafh.animemovieapp.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
@@ -23,7 +24,7 @@ class TopListFragment : Fragment(R.layout.fragment_top_list), TopListAdapter.onI
     private var _binding: FragmentTopListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : TopListViewModel by lazy {
+    private val viewModel: TopListViewModel by lazy {
         ViewModelProvider(this).get(TopListViewModel::class.java)
     }
 
@@ -59,11 +60,10 @@ class TopListFragment : Fragment(R.layout.fragment_top_list), TopListAdapter.onI
                 layoutManager = gridLayoutManager
                 setHasFixedSize(true)
                 adapter = topAdapter.withLoadStateHeaderAndFooter(
-                        header = AnimeLoadStateAdapter { topAdapter.retry() },
-                        footer = AnimeLoadStateAdapter { topAdapter.retry() }
+                    header = AnimeLoadStateAdapter { topAdapter.retry() },
+                    footer = AnimeLoadStateAdapter { topAdapter.retry() }
                 )
             }
-
 
             btnTryAgain.setOnClickListener {
                 topAdapter.retry()
@@ -81,13 +81,10 @@ class TopListFragment : Fragment(R.layout.fragment_top_list), TopListAdapter.onI
                 tvFailed.isVisible = loadState.source.refresh is LoadState.Error
             }
 
-
         }
-
 
         subscribeTopList(topAdapter)
     }
-
 
     private fun subscribeTopList(adapter: TopListAdapter) {
         viewModel.getTopList.observe(viewLifecycleOwner) {
@@ -100,6 +97,5 @@ class TopListFragment : Fragment(R.layout.fragment_top_list), TopListAdapter.onI
         val direction = TopListFragmentDirections.actionTopListFragmentToDetail(anime.malId)
         findNavController().navigate(direction)
     }
-
 
 }

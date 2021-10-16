@@ -12,7 +12,8 @@ class FridayAdapter : RecyclerView.Adapter<FridayAdapter.FridayViewHolder>() {
 
     private var list = emptyList<Anime>()
 
-    inner class FridayViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class FridayViewHolder(private val binding: ItemAnimeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(anime: Anime) {
             binding.apply {
                 ivImage.load(anime.imageUrl) {
@@ -31,10 +32,14 @@ class FridayAdapter : RecyclerView.Adapter<FridayAdapter.FridayViewHolder>() {
 
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FridayViewHolder {
-        return FridayViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return FridayViewHolder(
+            ItemAnimeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: FridayViewHolder, position: Int) {

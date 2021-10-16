@@ -1,29 +1,41 @@
 package com.tafh.animemovieapp.data.repository
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.paging.*
 import com.tafh.animemovieapp.api.ApiService
+import com.tafh.animemovieapp.data.model.Anime
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AnimeRepository @Inject constructor(
-        private val apiService: ApiService
+    private val apiService: ApiService
 ) {
-    fun getTopList() =
-        Pager(
-                config = PagingConfig(
-                        pageSize = 10,
-                        enablePlaceholders = false
-                ),
-                pagingSourceFactory = {
-                    AnimePagingSource(apiService)
-                }
-        ).liveData
+
+    fun getSearchResults(query: String) = Pager(
+        config = PagingConfig(pageSize = 10),
+        pagingSourceFactory = {
+            SearchPagingSource(apiService = apiService, query = query)
+        }
+    ).liveData
 
     fun getGenreList(genreId: Int) = Pager(
-            config = PagingConfig(pageSize = 10),
-            pagingSourceFactory = {
-                AnimeGenrePagingSource(apiService = apiService, genreId = genreId)
-            }
+        config = PagingConfig(pageSize = 10),
+        pagingSourceFactory = {
+            AnimeGenrePagingSource(apiService = apiService, genreId = genreId)
+        }
     ).liveData
+
+    fun getTopList() =
+        Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { AnimePagingSource(apiService) }
+        ).liveData
+
 
     suspend fun getTop() = apiService.getTopList(1)
 

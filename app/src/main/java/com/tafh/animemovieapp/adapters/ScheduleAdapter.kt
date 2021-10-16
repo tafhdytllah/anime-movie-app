@@ -14,7 +14,8 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>
 
     private var list = emptyList<Anime>()
 
-    inner class ScheduleViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ScheduleViewHolder(private val binding: ItemAnimeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(anime: Anime) {
             binding.apply {
                 ivImage.load(anime.imageUrl) {
@@ -33,10 +34,14 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>
 
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        return ScheduleViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ScheduleViewHolder(
+            ItemAnimeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {

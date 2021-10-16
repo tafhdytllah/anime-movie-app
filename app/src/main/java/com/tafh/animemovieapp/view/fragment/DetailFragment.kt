@@ -38,8 +38,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var viewModel: DetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
@@ -54,7 +56,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         })
 
-        binding.toolbar.setNavigationOnClickListener{ view ->
+        binding.toolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigateUp()
         }
 
@@ -94,10 +96,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun studioString(list: List<Studio>): String{
+    private fun studioString(list: List<Studio>): String {
 
-        var studio =""
-        for(i in list.indices) {
+        var studio = ""
+        for (i in list.indices) {
             val string = list[i].name
             if (i != 0) {
                 studio += ", $string"
@@ -109,17 +111,15 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun genreString(list: List<Genre>): String {
-
         var genre = ""
 
-        for(i in list.indices) {
+        for (i in list.indices) {
             val string = list[i].name
             if (i != 0) {
                 genre += ", $string"
             } else {
                 genre = string
             }
-
         }
 
         return genre

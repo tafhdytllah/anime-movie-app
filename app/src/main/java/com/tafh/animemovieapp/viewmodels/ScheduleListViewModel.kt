@@ -14,7 +14,7 @@ import retrofit2.Response
 
 
 class ScheduleListViewModel @ViewModelInject constructor(
-        private val repository: AnimeRepository
+    private val repository: AnimeRepository
 ) : ViewModel() {
 
     val sundayList: MutableLiveData<Response<SundayResponse>> = MutableLiveData()

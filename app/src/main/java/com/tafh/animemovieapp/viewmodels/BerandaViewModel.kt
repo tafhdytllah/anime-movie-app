@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class BerandaViewModel @ViewModelInject constructor(
-        private val repository: AnimeRepository
+    private val repository: AnimeRepository
 ) : ViewModel() {
 
     val topList: MutableLiveData<Response<TopResponse>> = MutableLiveData()
@@ -33,6 +33,5 @@ class BerandaViewModel @ViewModelInject constructor(
         val response = repository.getTop()
         topList.value = response
     }
-
 
 }

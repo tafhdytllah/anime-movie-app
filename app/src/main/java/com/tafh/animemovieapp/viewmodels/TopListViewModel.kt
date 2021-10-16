@@ -8,7 +8,7 @@ import com.tafh.animemovieapp.data.repository.AnimeRepository
 
 
 class TopListViewModel @ViewModelInject constructor(
-        private val repository: AnimeRepository
+    private val repository: AnimeRepository
 ) : ViewModel() {
 
     val getTopList = repository.getTopList().cachedIn(viewModelScope)

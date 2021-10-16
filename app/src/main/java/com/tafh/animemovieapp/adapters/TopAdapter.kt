@@ -24,12 +24,11 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
             override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 
-    inner class TopViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
-
+    inner class TopViewHolder(private val binding: ItemAnimeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Anime) {
             binding.apply {
@@ -45,7 +44,7 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
                 root.setOnClickListener {
                     val position = bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        
+
                         if (getItem(position) != null) {
                             itemClickCallback?.onItemClick(item)
                         }
@@ -64,7 +63,13 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
-        return TopViewHolder(ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return TopViewHolder(
+            ItemAnimeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -89,8 +94,6 @@ class TopAdapter : ListAdapter<Anime, TopAdapter.TopViewHolder>(TopDiffCallback)
     interface onItemClickCallback {
         fun onItemClick(anime: Anime)
     }
-
-
 
 
 }

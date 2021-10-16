@@ -38,14 +38,12 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
     lateinit var genreAdapter: GenreAdapter
     lateinit var scheduleAdapter: ScheduleAdapter
 
-
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentBerandaBinding.inflate(inflater)
         context ?: return binding.root
-
 
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(BerandaFragmentDirections.actionBerandaToSearchFragment())
@@ -54,8 +52,6 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         setupTopAdapter()
         setupGenreAdapter()
         setupScheduleAdapter()
-
-
 
         binding.tvTopLihatSemua.setOnClickListener {
             findNavController().navigate(BerandaFragmentDirections.actionBerandaToTopListFragment())
@@ -68,17 +64,16 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         return binding.root
     }
 
-
     private fun setupTopAdapter() {
         topAdapter = TopAdapter()
         binding.rvTop.adapter = topAdapter
         subscribeTop()
         topAdapter.setOnItemClickCallBack(object : TopAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
+                val action =
+                    BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
                 findNavController().navigate(action)
             }
-
         })
     }
 
@@ -91,14 +86,12 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
 
         scheduleAdapter.setOnItemClickListener(object : ScheduleAdapter.onItemClickCallback {
             override fun onItemClick(anime: Anime) {
-                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
+                val action =
+                    BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(anime.malId)
                 findNavController().navigate(action)
             }
-
         })
     }
-
-
 
     private fun setupGenreAdapter() {
         genreAdapter = GenreAdapter()
@@ -108,14 +101,14 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
 
         genreAdapter.setOnItemClickCallback(object : GenreAdapter.onItemClickCallback {
             override fun onItemClick(genreList: GenreList) {
-                val action = BerandaFragmentDirections.actionBerandaToGenreListFragment(genreList.id, genreList.name)
+                val action = BerandaFragmentDirections.actionBerandaToGenreListFragment(
+                    genreList.id,
+                    genreList.name
+                )
                 findNavController().navigate(action)
             }
-
         })
     }
-
-
 
     private fun subscribeSchedule(adapter: ScheduleAdapter) {
 
@@ -156,8 +149,6 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
             day = formatter.format(date)
             return day
         }
-
-
     }
 
 
@@ -171,13 +162,6 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
             }
         }
     }
-
-
-//    override fun onItemClick(top: Top) {
-//        val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-//        findNavController().navigate(action)
-//    }
-
 
     private fun setDataGenre(): List<GenreList> {
         val list = mutableListOf<GenreList>()
@@ -223,33 +207,9 @@ class BerandaFragment : Fragment(R.layout.fragment_beranda) {
         list.add(GenreList(40, "Psychological"))
         list.add(GenreList(41, "Thriller"))
         list.add(GenreList(42, "Seinen"))
-
         list.add(GenreList(43, "Josei"))
-
-
         return list
-
     }
 
-
-//    private fun setActionbar() {
-//
-//        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-//        val actionBar = (activity as AppCompatActivity).supportActionBar
-//        actionBar?.setDisplayShowTitleEnabled(false)
-//    }
-
-
-    // onItemClickCallBack
-//        topAdapter.setOnItemClickCallBack(object : TopListAdapter.OnItemClickCallBack{
-//            override fun onItemClick(top: Top) {
-////                val top = Top(
-////                        top.malId
-////                )
-//                val action = BerandaFragmentDirections.actionBerandaFragmentToDetailFragment(top.malId)
-//                findNavController().navigate(action)
-//            }
-//
-//        })
 
 }

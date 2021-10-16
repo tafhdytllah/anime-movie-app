@@ -9,9 +9,11 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tafh.animemovieapp.databinding.LoadStateBinding
 
-class AnimeLoadStateAdapter(private val retry: ()-> Unit) : LoadStateAdapter<AnimeLoadStateAdapter.LoadStateViewHolder>(){
+class AnimeLoadStateAdapter(private val retry: () -> Unit) :
+    LoadStateAdapter<AnimeLoadStateAdapter.LoadStateViewHolder>() {
 
-    inner class LoadStateViewHolder(private val binding: LoadStateBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class LoadStateViewHolder(private val binding: LoadStateBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnRetry.setOnClickListener {
@@ -20,8 +22,6 @@ class AnimeLoadStateAdapter(private val retry: ()-> Unit) : LoadStateAdapter<Ani
         }
 
         fun bind(loadState: LoadState) {
-            Log.d("CURRENTLOADINGPAGEKEY", "loadstate = ${loadState}")
-            Log.d("CURRENTLOADINGPAGEKEY", "loading = ${LoadState.Loading}")
 
             if (loadState.equals(LoadState.Loading)) {
                 binding.apply {
@@ -39,7 +39,6 @@ class AnimeLoadStateAdapter(private val retry: ()-> Unit) : LoadStateAdapter<Ani
 
         }
 
-
     }
 
     override fun onBindViewHolder(holder: LoadStateViewHolder, loadState: LoadState) {
@@ -47,6 +46,12 @@ class AnimeLoadStateAdapter(private val retry: ()-> Unit) : LoadStateAdapter<Ani
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
-        return LoadStateViewHolder(LoadStateBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return LoadStateViewHolder(
+            LoadStateBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 }
